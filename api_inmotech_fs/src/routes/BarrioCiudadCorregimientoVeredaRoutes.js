@@ -1,30 +1,14 @@
-// import express from 'express';
-// import {
-//     getAllBarriosCiudadesCorregimientosVeredas,
-//     getBarrioCiudadCorregimientoVeredaById,
-//     createBarrioCiudadCorregimientoVereda,
-//     updateBarrioCiudadCorregimientoVereda,
-//     deleteBarrioCiudadCorregimientoVereda
-// } from '../controllers/barrio_ciudad_corregimiento_vereda.js';
 
-// const router = express.Router();
-
-// router.get('/', getAllBarriosCiudadesCorregimientosVeredas);
-// router.get('/:id', getBarrioCiudadCorregimientoVeredaById);
-// router.post('/', createBarrioCiudadCorregimientoVereda);
-// router.put('/:id', updateBarrioCiudadCorregimientoVereda);
-// router.delete('/:id', deleteBarrioCiudadCorregimientoVereda);
-
-// export default router;
 
 const express = require('express');
-const BarrioCiudadCorregimientoVeredaController = require('../controllers/BarrioCiudadCorregimientoVeredaController');
+const BarrioCiudadCorregimientoVeredaController = require('../controllers/Barrio_ciudad_corregimiento_veredaController');
+const verifyToken = require('../middlewares/verifyToken');
+const authorize = require('../middlewares/apiMiddleware');
 const router = express.Router();
-
-router.get('/', BarrioCiudadCorregimientoVeredaController.findAll);
-router.get('/:id', BarrioCiudadCorregimientoVeredaController.findById);
-router.post('/', BarrioCiudadCorregimientoVeredaController.create);
-router.put('/:id', BarrioCiudadCorregimientoVeredaController.update);
-router.delete('/:id', BarrioCiudadCorregimientoVeredaController.delete);
+router.get('/', verifyToken, BarrioCiudadCorregimientoVeredaController.findAll);
+router.get('/:id', verifyToken, BarrioCiudadCorregimientoVeredaController.findByID);
+router.post('/', verifyToken, authorize, BarrioCiudadCorregimientoVeredaController.create);
+router.put('/:id', verifyToken, authorize, BarrioCiudadCorregimientoVeredaController.update);
+router.delete('/:id', verifyToken, authorize, BarrioCiudadCorregimientoVeredaController.delete);
 
 module.exports = router;

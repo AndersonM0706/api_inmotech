@@ -1,30 +1,14 @@
-// import express from 'express';
-// import {
-//     getAllCorregimientos,
-//     getCorregimientoById,
-//     createCorregimiento,
-//     updateCorregimiento,
-//     deleteCorregimiento
-// } from '../controllers/corregimiento.js';
 
-// const router = express.Router();
-
-// router.get('/', getAllCorregimientos);
-// router.get('/:id', getCorregimientoById);
-// router.post('/', createCorregimiento);
-// router.put('/:id', updateCorregimiento);
-// router.delete('/:id', deleteCorregimiento);
-
-// export default router;
 
 const express = require('express');
 const CorregimientoController = require('../controllers/CorregimientoController');
+const verifyToken = require('../middlewares/verifyToken');
+const authorize = require('../middlewares/apiMiddleware');
 const router = express.Router();
-
-router.get('/', CorregimientoController.findAll);
-router.get('/:id', CorregimientoController.findById);
-router.post('/', CorregimientoController.create);
-router.put('/:id', CorregimientoController.update);
-router.delete('/:id', CorregimientoController.delete);
+router.get('/', verifyToken, CorregimientoController.findAll);
+router.get('/:id', verifyToken, CorregimientoController.findByID);
+router.post('/', verifyToken, authorize, CorregimientoController.create);
+router.put('/:id', verifyToken, authorize, CorregimientoController.update);
+router.delete('/:id', verifyToken, authorize, CorregimientoController.delete);
 
 module.exports = router;

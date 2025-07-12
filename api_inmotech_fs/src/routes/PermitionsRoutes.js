@@ -1,30 +1,14 @@
-// import express from 'express';
-// import {
-//     getAllPermitions,
-//     getPermitionById,
-//     createPermition,
-//     updatePermition,
-//     deletePermition
-// } from '../controllers/permitionsController.js';
 
-// const router = express.Router();
-
-// router.get('/', getAllPermitions);
-// router.get('/:id', getPermitionById);
-// router.post('/', createPermition);
-// router.put('/:id', updatePermition);
-// router.delete('/:id', deletePermition);
-
-// export default router;
 
 const express = require('express');
-const PermitionsController = require('../controllers/permitionsController');
+const PermitionsController = require('../controllers/PermitionsController');
+const verifyToken = require('../middlewares/verifyToken');
+const authorize = require('../middlewares/apiMiddleware');
 const router = express.Router();
-
-router.get('/', PermitionsController.findAll);
-router.get('/:id', PermitionsController.findById);
-router.post('/', PermitionsController.create);
-router.put('/:id', PermitionsController.update);
-router.delete('/:id', PermitionsController.delete);
+router.get('/', verifyToken, PermitionsController.findAll);
+router.get('/:id', verifyToken, PermitionsController.findByID);
+router.post('/', verifyToken, authorize, PermitionsController.create);
+router.put('/:id', verifyToken, authorize, PermitionsController.update);
+router.delete('/:id', verifyToken, authorize, PermitionsController.delete);
 
 module.exports = router;

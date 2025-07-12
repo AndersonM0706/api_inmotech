@@ -1,30 +1,15 @@
-// import express from 'express';
-// import {
-//     getAllNdaps,
-//     getNdapById,
-//     createNdap,
-//     updateNdap,
-//     deleteNdap
-// } from '../controllers/ndap.js';
 
-// const router = express.Router();
-
-// router.get('/', getAllNdaps);
-// router.get('/:id', getNdapById);
-// router.post('/', createNdap);
-// router.put('/:id', updateNdap);
-// router.delete('/:id', deleteNdap);
-
-// export default router;
+// api_inmotech/api_inmotech_fs/src/routes/NdapRoutes.js
 
 const express = require('express');
 const NdapController = require('../controllers/NdapController');
+const verifyToken = require('../middlewares/verifyToken');
+const authorize = require('../middlewares/apiMiddleware');
 const router = express.Router();
-
-router.get('/', NdapController.findAll);
-router.get('/:id', NdapController.findById);
-router.post('/', NdapController.create);
-router.put('/:id', NdapController.update);
-router.delete('/:id', NdapController.delete);
+router.get('/', verifyToken, NdapController.findAll);
+router.get('/:id', verifyToken, NdapController.findByID);
+router.post('/', verifyToken, authorize, NdapController.create);
+router.put('/:id', verifyToken, authorize, NdapController.update);
+router.delete('/:id', verifyToken, authorize, NdapController.delete);
 
 module.exports = router;

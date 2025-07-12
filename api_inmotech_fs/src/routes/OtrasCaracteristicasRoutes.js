@@ -1,11 +1,14 @@
+
+// Importar los middlewares verifyToken y authorize
 const express = require('express');
-const OtrasCaracteristicasController = require('../controllers/OtrasCaracteristicasController');
+const verifyToken = require('../middlewares/verifyToken');
+const authorize = require('../middlewares/apiMiddleware');
 const router = express.Router();
 
-router.get('/', OtrasCaracteristicasController.findAll);
-router.get('/:id', OtrasCaracteristicasController.findById);
-router.post('/', OtrasCaracteristicasController.create);
-router.put('/:id', OtrasCaracteristicasController.update);
-router.delete('/:id', OtrasCaracteristicasController.delete);
+router.get('/', verifyToken, OtrasCaracteristicasController.findAll);
+router.get('/:id', verifyToken, OtrasCaracteristicasController.findByID);
+router.post('/', verifyToken, authorize, OtrasCaracteristicasController.create);
+router.put('/:id', verifyToken, authorize, OtrasCaracteristicasController.update);
+router.delete('/:id', verifyToken, authorize, OtrasCaracteristicasController.delete);
 
 module.exports = router;

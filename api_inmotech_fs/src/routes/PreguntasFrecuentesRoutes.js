@@ -1,16 +1,15 @@
-const express = require('express');
-const router = express.Router();
-const PreguntasFrecuentesController = require('../controllers/PreguntasFrecuentesController');
 
-// Crear
-router.post('/', PreguntasFrecuentesController.create);
-// Listar todos
-router.get('/', PreguntasFrecuentesController.findAll);
-// Obtener por ID
-router.get('/:id', PreguntasFrecuentesController.findById);
-// Actualizar
-router.put('/:id', PreguntasFrecuentesController.update);
-// Eliminar
-router.delete('/:id', PreguntasFrecuentesController.delete);
+// api_inmotech/api_inmotech_fs/src/routes/PreguntasFrecuentesRoutes.js
+
+const express = require('express');
+const PreguntasFrecuentesController = require('../controllers/PreguntasFrecuentesController'); // Importa el controlador específico
+const router = express.Router();
+const verifyToken = require('../middlewares/verifyToken');
+const authorize = require('../middlewares/apiMiddleware');
+router.get('/', verifyToken, PreguntasFrecuentesController.findAll);
+router.get('/:id', verifyToken, PreguntasFrecuentesController.findByID);
+router.post('/', verifyToken, authorize, PreguntasFrecuentesController.create);
+router.put('/:id', verifyToken, authorize, PreguntasFrecuentesController.update);
+router.delete('/:id', verifyToken, authorize, PreguntasFrecuentesController.delete);
 
 module.exports = router;

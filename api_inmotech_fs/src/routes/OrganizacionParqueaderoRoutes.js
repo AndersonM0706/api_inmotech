@@ -1,30 +1,16 @@
-// import express from 'express';
-// import {
-//     getAllOrganizacionParqueadero,
-//     getOrganizacionParqueaderoById,
-//     createOrganizacionParqueadero,
-//     updateOrganizacionParqueadero,
-//     deleteOrganizacionParqueadero
-// } from '../controllers/organizacion_parqueadero.js';
 
-// const router = express.Router();
 
-// router.get('/', getAllOrganizacionParqueadero);
-// router.get('/:id', getOrganizacionParqueaderoById);
-// router.post('/', createOrganizacionParqueadero);
-// router.put('/:id', updateOrganizacionParqueadero);
-// router.delete('/:id', deleteOrganizacionParqueadero);
-
-// export default router;
+// api_inmotech/api_inmotech_fs/src/routes/OrganizacionParqueaderoRoutes.js
 
 const express = require('express');
 const OrganizacionParqueaderoController = require('../controllers/OrganizacionParqueaderoController');
+const verifyToken = require('../middlewares/verifyToken');
+const authorize = require('../middlewares/apiMiddleware');
 const router = express.Router();
-
-router.get('/', OrganizacionParqueaderoController.findAll);
-router.get('/:id', OrganizacionParqueaderoController.findById);
-router.post('/', OrganizacionParqueaderoController.create);
-router.put('/:id', OrganizacionParqueaderoController.update);
-router.delete('/:id', OrganizacionParqueaderoController.delete);
+router.get('/', verifyToken, OrganizacionParqueaderoController.findAll);
+router.get('/:id', verifyToken, OrganizacionParqueaderoController.findByID);
+router.post('/', verifyToken, authorize, OrganizacionParqueaderoController.create);
+router.put('/:id', verifyToken, authorize, OrganizacionParqueaderoController.update);
+router.delete('/:id', verifyToken, authorize, OrganizacionParqueaderoController.delete);
 
 module.exports = router;

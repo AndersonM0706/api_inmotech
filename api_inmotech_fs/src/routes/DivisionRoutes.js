@@ -1,30 +1,14 @@
-// import express from 'express';
-// import {
-//     getAllDivisions,
-//     getDivisionById,
-//     createDivision,
-//     updateDivision,
-//     deleteDivision
-// } from '../controllers/division.js';
 
-// const router = express.Router();
-
-// router.get('/', getAllDivisions);
-// router.get('/:id', getDivisionById);
-// router.post('/', createDivision);
-// router.put('/:id', updateDivision);
-// router.delete('/:id', deleteDivision);
-
-// export default router;
 
 const express = require('express');
 const DivisionController = require('../controllers/DivisionController');
+const verifyToken = require('../middlewares/verifyToken');
+const authorize = require('../middlewares/apiMiddleware');
 const router = express.Router();
-
-router.get('/', DivisionController.findAll);
-router.get('/:id', DivisionController.findById);
-router.post('/', DivisionController.create);
-router.put('/:id', DivisionController.update);
-router.delete('/:id', DivisionController.delete);
+router.get('/', verifyToken, DivisionController.findAll);
+router.get('/:id', verifyToken, DivisionController.findByID);
+router.post('/', verifyToken, authorize, DivisionController.create);
+router.put('/:id', verifyToken, authorize, DivisionController.update);
+router.delete('/:id', verifyToken, authorize, DivisionController.delete);
 
 module.exports = router;

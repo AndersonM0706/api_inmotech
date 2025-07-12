@@ -1,16 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const ContactoController = require('../controllers/ContactoController');
-
-// Crear
-router.post('/', ContactoController.create);
-// Listar todos
-router.get('/', ContactoController.findAll);
-// Obtener por ID
-router.get('/:id', ContactoController.findById);
-// Actualizar
-router.put('/:id', ContactoController.update);
-// Eliminar
-router.delete('/:id', ContactoController.delete);
+const verifyToken = require('../middlewares/verifyToken');
+const authorize = require('../middlewares/apiMiddleware');
+router.post('/', verifyToken, authorize, ContactoController.create);
+router.get('/', verifyToken, ContactoController.findAll);
+router.get('/:id', verifyToken, ContactoController.findByID);
+router.put('/:id', verifyToken, authorize, ContactoController.update);
+router.delete('/:id', verifyToken, authorize, ContactoController.delete);
 
 module.exports = router;

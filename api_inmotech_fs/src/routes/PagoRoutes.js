@@ -1,11 +1,12 @@
 const express = require('express');
 const PagoController = require('../controllers/PagoController');
 const router = express.Router();
-
-router.get('/', PagoController.findAll);
-router.get('/:id', PagoController.findById);
-router.post('/', PagoController.create);
-router.put('/:id', PagoController.update);
-router.delete('/:id', PagoController.delete);
+const verifyToken = require('../middlewares/verifyToken');
+const authorize = require('../middlewares/apiMiddleware'); 
+router.get('/', verifyToken, PagoController.findAll);
+router.get('/:id', verifyToken, PagoController.findByID);
+router.post('/', verifyToken, authorize, PagoController.create);
+router.put('/:id', verifyToken, authorize, PagoController.update);
+router.delete('/:id', verifyToken, authorize, PagoController.delete);
 
 module.exports = router;

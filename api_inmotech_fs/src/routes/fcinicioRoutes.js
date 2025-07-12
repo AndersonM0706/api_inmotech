@@ -1,8 +1,8 @@
 const express = require('express');
-const InmuebleController = require('../controllers/fcinicioController'); // Correctly points to the inicio controller
+const InmuebleController = require('../controllers/fcinicioController');
 const router = express.Router();
+const verifyToken = require('../middlewares/verifyToken');
 
-// Route for fetching featured properties (e.g., for a home page)
-router.get('/featured', InmuebleController.getFeaturedInmuebles);
+router.get('/featured', verifyToken, InmuebleController.getFeaturedInmuebles);
 
 module.exports = router;

@@ -1,16 +1,17 @@
-const express = require('express');
-const router = express.Router();
-const TerminosYCondicionesController = require('../controllers/TerminosYCondicionesController');
 
-// Crear
-router.post('/', TerminosYCondicionesController.create);
-// Listar todos
-router.get('/', TerminosYCondicionesController.findAll);
-// Obtener por ID
-router.get('/:id', TerminosYCondicionesController.findById);
-// Actualizar
-router.put('/:id', TerminosYCondicionesController.update);
-// Eliminar
-router.delete('/:id', TerminosYCondicionesController.delete);
+
+// api_inmotech/api_inmotech_fs/src/routes/TerminosYCondicionesRoutes.js
+
+const express = require('express');
+
+const TerminosYCondicionesController = require('../controllers/TerminosYCondicionesController');
+const router = express.Router();
+const verifyToken = require('../middlewares/verifyToken');
+const authorize = require('../middlewares/apiMiddleware');
+router.get('/', verifyToken, TerminosYCondicionesController.findAll);
+router.get('/:id', verifyToken, TerminosYCondicionesController.findByID);
+router.post('/', verifyToken, authorize, TerminosYCondicionesController.create);
+router.put('/:id', verifyToken, authorize, TerminosYCondicionesController.update);
+router.delete('/:id', verifyToken, authorize, TerminosYCondicionesController.delete);
 
 module.exports = router;

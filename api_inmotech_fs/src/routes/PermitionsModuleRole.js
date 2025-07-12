@@ -1,30 +1,15 @@
-// import express from 'express';
-// import {
-//     getAllPermitionsModuleRoles,
-//     getPermitionsModuleRoleById,
-//     createPermitionsModuleRole,
-//     updatePermitionsModuleRole,
-//     deletePermitionsModuleRole
-// } from '../controllers/permitionsModuleRoleController.js';
 
-// const router = express.Router();
-
-// router.get('/', getAllPermitionsModuleRoles);
-// router.get('/:id', getPermitionsModuleRoleById);
-// router.post('/', createPermitionsModuleRole);
-// router.put('/:id', updatePermitionsModuleRole);
-// router.delete('/:id', deletePermitionsModuleRole);
-
-// export default router;
+// api_inmotech/api_inmotech_fs/src/routes/PermisionsModuleRole.js
 
 const express = require('express');
-const PermitionsModuleRoleController = require('../controllers/PermitionsModuleRoleController');
+const PermisionsModuleRoleController = require('../controllers/PermisionsModuleRoleController');
+const verifyToken = require('../middlewares/verifyToken');
+const authorize = require('../middlewares/apiMiddleware'); 
 const router = express.Router();
-
-router.get('/', PermitionsModuleRoleController.findAll);
-router.get('/:id', PermitionsModuleRoleController.findById);
-router.post('/', PermitionsModuleRoleController.create);
-router.put('/:id', PermitionsModuleRoleController.update);
-router.delete('/:id', PermitionsModuleRoleController.delete);
+router.get('/', verifyToken, PermisionsModuleRoleController.findAll);
+router.get('/:id', verifyToken, PermisionsModuleRoleController.findByID);
+router.post('/', verifyToken, authorize, PermisionsModuleRoleController.create);
+router.put('/:id', verifyToken, authorize, PermisionsModuleRoleController.update);
+router.delete('/:id', verifyToken, authorize, PermisionsModuleRoleController.delete);
 
 module.exports = router;

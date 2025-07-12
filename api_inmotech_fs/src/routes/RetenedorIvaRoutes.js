@@ -1,16 +1,15 @@
+
+// api_inmotech/api_inmotech_fs/src/routes/RetenedorIvaRoutes.js
+
 const express = require('express');
 const RetenedorIvaController = require('../controllers/RetenedorIvaController');
+const verifyToken = require('../middlewares/verifyToken');
+const authorize = require('../middlewares/apiMiddleware');
 const router = express.Router();
-
-// Obtener todos los retenedores de IVA
-router.get('/', RetenedorIvaController.findAll);
-// Obtener un retenedor de IVA por ID
-router.get('/:id', RetenedorIvaController.findById);
-// Crear un nuevo retenedor de IVA
-router.post('/', RetenedorIvaController.create);
-// Actualizar un retenedor de IVA existente
-router.put('/:id', RetenedorIvaController.update);
-// Eliminar un retenedor de IVA
-router.delete('/:id', RetenedorIvaController.delete);
+router.get('/', verifyToken, RetenedorIvaController.findAll);
+router.get('/:id', verifyToken, RetenedorIvaController.findByID);
+router.post('/', verifyToken, authorize, RetenedorIvaController.create);
+router.put('/:id', verifyToken, authorize, RetenedorIvaController.update);
+router.delete('/:id', verifyToken, authorize, RetenedorIvaController.delete);
 
 module.exports = router;

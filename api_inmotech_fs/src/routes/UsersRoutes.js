@@ -1,31 +1,15 @@
-// import express from 'express';
-// import { authenticateToken } from '../middlewares/authMiddleware.js';
-// import {
-//     getAllUsers,
-//     getUserById,
-//     createUser,
-//     updateUser,
-//     deleteUser,
-// } from '../controllers/usersController.js';
 
-// const router = express.Router();
-
-// router.get('/', authenticateToken, getAllUsers);
-// router.get('/:id', authenticateToken, getUserById);
-// router.post('/', createUser);
-// router.put('/:id', authenticateToken, updateUser);
-// router.delete('/:id', authenticateToken, deleteUser);
-
-// export default router;
+// api_inmotech/api_inmotech_fs/src/routes/UsersRoutes.js
 
 const express = require('express');
 const UsersController = require('../controllers/UsersController');
 const router = express.Router();
-
-router.get('/', UsersController.findAll);
-router.get('/:id', UsersController.findById);
-router.post('/', UsersController.create);
-router.put('/:id', UsersController.update);
-router.delete('/:id', UsersController.delete);
+const verifyToken = require('../middlewares/verifyToken');
+const authorize = require('../middlewares/apiMiddleware');
+router.get('/', verifyToken, UsersController.findAll);
+router.get('/:id', verifyToken, UsersController.findByID);
+router.post('/', verifyToken, authorize, UsersController.create);
+router.put('/:id', verifyToken, authorize, UsersController.update);
+router.delete('/:id', verifyToken, authorize, UsersController.delete);
 
 module.exports = router;

@@ -1,30 +1,15 @@
-// import express from 'express';
-// import {
-//     getAllUserStatus,
-//     getUserStatusById,
-//     createUserStatus,
-//     updateUserStatus,
-//     deleteUserStatus,
-// } from '../controllers/userStatusController.js';
 
-// const router = express.Router();
-
-// router.get('/', getAllUserStatus);
-// router.get('/:id', getUserStatusById);
-// router.post('/', createUserStatus);
-// router.put('/:id', updateUserStatus);
-// router.delete('/:id', deleteUserStatus);
-
-// export default router;
+// api_inmotech/api_inmotech_fs/src/routes/UserStatusRoutes.js
 
 const express = require('express');
 const UserStatusController = require('../controllers/UserStatusController');
 const router = express.Router();
-
-router.get('/', UserStatusController.findAll);
-router.get('/:id', UserStatusController.findById);
-router.post('/', UserStatusController.create);
-router.put('/:id', UserStatusController.update);
-router.delete('/:id', UserStatusController.delete);
+const verifyToken = require('../middlewares/verifyToken');
+const authorize = require('../middlewares/apiMiddleware');
+router.get('/', verifyToken, UserStatusController.findAll);
+router.get('/:id', verifyToken, UserStatusController.findByID);
+router.post('/', verifyToken, authorize, UserStatusController.create);
+router.put('/:id', verifyToken, authorize, UserStatusController.update);
+router.delete('/:id', verifyToken, authorize, UserStatusController.delete);
 
 module.exports = router;
